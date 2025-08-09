@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ClientStatusEnum;
 use App\Enums\GenderEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -51,6 +52,10 @@ class Client extends Model
     public function payment(): HasOne
     {
         return $this->hasOne(ClientPayment::class);
+    }
+    public function dietPrograms(): HasMany
+    {
+        return $this->hasMany(DietProgram::class);
     }
 
     public function getStatusColorAttribute(): string
