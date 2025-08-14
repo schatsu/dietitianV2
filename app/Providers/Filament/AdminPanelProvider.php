@@ -80,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
                 'Site',
                 'Blog',
                 'Kullanıcı Yönetimi',
+                'Site Ayarları'
             ])
             ->sidebarCollapsibleOnDesktop()
             ->authMiddleware([
