@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Slider;
+use Illuminate\Support\Facades\Cache;
 
 class SliderObserver
 {
@@ -12,6 +13,7 @@ class SliderObserver
     public function created(Slider $slider): void
     {
         self::renumberOrder();
+        Cache::forget('active_sliders');
     }
 
     /**
@@ -22,6 +24,7 @@ class SliderObserver
         if ($slider->isDirty('order')) {
             self::renumberOrder();
         }
+        Cache::forget('active_sliders');
     }
 
     /**
@@ -30,6 +33,7 @@ class SliderObserver
     public function deleted(Slider $slider): void
     {
         self::renumberOrder();
+        Cache::forget('active_sliders');
     }
 
     /**

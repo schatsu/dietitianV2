@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Observers\SliderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
+use Mtvs\EloquentHashids\HasHashid;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\SlugOptions;
@@ -12,7 +13,8 @@ use Spatie\Sluggable\SlugOptions;
 #[ObservedBy(SliderObserver::class)]
 class Slider extends Model implements Sortable
 {
-    use SortableTrait;
+    use SortableTrait, HasHashid;
+
     public $sortable = [
         'order_column_name' => 'order',
         'sort_when_creating' => true,
@@ -37,5 +39,14 @@ class Slider extends Model implements Sortable
             'order' => 'integer',
             'is_active' => 'boolean'
         ];
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+
+        return 'https://placehold.co/1920x1200';
     }
 }
