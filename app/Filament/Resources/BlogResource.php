@@ -96,6 +96,7 @@ class BlogResource extends Resource
                             ->label('Kapak Görseli')
                             ->image()
                             ->mimeTypeMap(['image/jpeg' => 'jpg', 'image/png' => 'png'])
+                            ->imageEditor()
                             ->directory('blogs'),
 
                         Forms\Components\Grid::make(3)

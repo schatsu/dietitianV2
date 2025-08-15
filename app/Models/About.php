@@ -20,6 +20,7 @@ class About extends Model
             ->saveSlugsTo('slug');
     }
     public $timestamps = false;
+
     protected $fillable = [
         'title','slug', 'content'
     ];

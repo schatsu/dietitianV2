@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Service;
+use Illuminate\Support\Facades\Cache;
 
 class ServiceObserver
 {
@@ -12,6 +13,7 @@ class ServiceObserver
     public function created(Service $service): void
     {
         self::renumberOrder();
+        Cache::forget('active_services');
     }
 
     /**
@@ -22,6 +24,8 @@ class ServiceObserver
         if ($service->isDirty('order')) {
             self::renumberOrder();
         }
+        Cache::forget('active_services');
+
     }
 
     /**
@@ -30,6 +34,7 @@ class ServiceObserver
     public function deleted(Service $service): void
     {
         self::renumberOrder();
+        Cache::forget('active_services');
     }
 
     /**

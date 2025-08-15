@@ -53,6 +53,9 @@ class ServiceResource extends Resource
                                     ->label('Açıklama')
                                     ->columnSpanFull(),
                                 Forms\Components\FileUpload::make('image')
+                                    ->helperText('Önerilen boyut: 600x710')
+                                    ->imageEditor()
+                                    ->directory('services')
                                     ->label('Görsel')
                                     ->image(),
                                 Forms\Components\TextInput::make('order')

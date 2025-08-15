@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Testimonial;
+use Illuminate\Support\Facades\Cache;
 
 class TestimonialObserver
 {
@@ -12,6 +13,7 @@ class TestimonialObserver
     public function created(Testimonial $testimonial): void
     {
         self::renumberOrder();
+        Cache::forget('testimonial');
     }
 
     /**
@@ -22,6 +24,7 @@ class TestimonialObserver
         if ($testimonial->isDirty('order')) {
             self::renumberOrder();
         }
+        Cache::forget('testimonial');
     }
 
     /**
@@ -30,6 +33,7 @@ class TestimonialObserver
     public function deleted(Testimonial $testimonial): void
     {
         self::renumberOrder();
+        Cache::forget('testimonial');
     }
 
     /**
