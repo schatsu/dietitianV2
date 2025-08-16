@@ -4,11 +4,10 @@
     <section id="down-section" class="border-bottom border-color-extra-medium-gray mt-2">
         <div class="container overlap-gap-section">
             <div class="row align-items-end justify-content-center mb-5 md-mb-40px text-center text-md-start">
-                <div class="col-xl-5 col-lg-6 col-md-10 md-mb-20px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <span class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-14 lh-42px fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-block">Hakkımda</span>
-                    <h3 class="text-dark-gray fw-700 mb-0 ls-minus-1px">{{$about?->title ?? ''}}</h3>
+                <div class=" col-md-10 md-mb-20px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <h3 class="text-dark-gray fw-700 mb-0 ls-minus-1px">Hakkımda</h3>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-10 offset-xl-1 text-center text-lg-start last-paragraph-no-margin">
+                <div class=" col-md-10 md-mb-20px text-center text-lg-start last-paragraph-no-margin">
                     <p class="w-90 xl-w-100" data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>{!! $about?->content !!}<span class="fw-600 text-dark-gray text-decoration-line-bottom"></span></p>
                 </div>
             </div>
@@ -47,7 +46,7 @@
                         </div>
                         <div class="feature-box-content">
                             <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Deneyim</span>
-                            <p>15+ Yıl</p>
+                            <p>5+ Yıl</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                         </div>
                         <div class="feature-box-content">
                             <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Danışan</span>
-                            <p>500 +</p>
+                            <p>1000 +</p>
                         </div>
                     </div>
                 </div>

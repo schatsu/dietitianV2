@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -24,4 +25,9 @@ class About extends Model
     protected $fillable = [
         'title','slug', 'content'
     ];
+
+    public function getMediumAboutAttribute(): string
+    {
+        return Str::limit($this->content, 310);
+    }
 }

@@ -50,6 +50,9 @@ class SliderResource extends Resource
                                 Forms\Components\FileUpload::make('image')
                                     ->label('Resim')
                                     ->image()
+                                    ->directory('sliders')
+                                    ->imageEditor()
+                                    ->maxSize(4096)
                                     ->required(),
                                 Forms\Components\TextInput::make('link')
                                     ->label('Link')

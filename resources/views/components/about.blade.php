@@ -15,17 +15,13 @@
                          class="position-absolute top-50 left-minus-100px lg-left-minus-40px sm-left-minus-30px lg-w-50 sm-w-55"
                          data-bottom-top="transform: translateY(50px)"
                          data-top-bottom="transform: translateY(-220px)" alt="">
-                    <img src="{{asset('front/images/demo-corporate-02.png')}}"
-                         class="position-absolute top-0px xl-top-minus-10px w-170px right-20px md-right-40px xs-w-40"
-                         data-bottom-top="transform: translateY(-50px)"
-                         data-top-bottom="transform: translateY(50px)" alt="">
                 </div>
                 <div class="col-lg-6 ps-6 text-center text-lg-start lg-ps-15px"
                      data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
                         <span
                             class="ps-25px pe-25px mb-20px text-uppercase text-base-color fs-14 lh-42px fw-700 border-radius-100px bg-gradient-very-light-gray-transparent d-inline-block">Hakkımda</span>
                     <h3 class="text-dark-gray fw-700 ls-minus-1px">{{$about?->title}}</h3>
-                    <p class="w-80 xl-w-90 lg-w-100 mb-40px sm-mb-25px">{!! $about?->content ?? '' !!}</p>
+                    <p class="w-80 xl-w-90 lg-w-100 mb-40px sm-mb-25px">{!! $about?->medium_about ?? '' !!}</p>
                     <a href="{{route('about')}}"
                        class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-box-shadow btn-rounded me-25px xs-me-0">
                                 <span>
