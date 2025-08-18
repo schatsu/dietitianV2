@@ -51,7 +51,7 @@
                     <p class="w-95 lg-w-100 mb-35px">Kişiye özel beslenme programlarımız, bilimsel veriler ve deneyimle hazırlanır. Amacımız; sürdürülebilir, sağlıklı ve keyifli bir yaşam tarzını size kazandırmak.</p>
                     <div class="feature-box feature-box-left-icon bg-gradient-flamingo-amethyst-green border-radius-4px w-95 xl-w-100 mb-40px ps-30px pe-30px pt-15px pb-15px xs-p-15px sm-mb-30px xs-lh-normal">
                         <div class="feature-box-icon me-10px">
-                            <img src="https://placehold.co/48x62" class="h-30px" alt="">
+                            <img src="{{asset('front/images/bg-3.webp')}}" class="h-30px" alt="">
                         </div>
                         <div class="feature-box-content">
                             <span class="alt-font text-white fw-500">En iyi beslenme danışmanlık hizmeti.</span>
@@ -60,7 +60,7 @@
                     <div class="row align-items-center text-center text-sm-start">
                         <div class="col-sm-auto xs-mb-5px">
                             <h3 class="alt-font text-dark-gray mb-0 d-inline-block align-middle me-10px lg-fs-32 fw-700">722+</h3>
-                            <div class="text-center bg-dark-gray text-white fs-14 border-radius-4px d-inline-block ps-15px pe-15px lh-34 align-middle me-5px">
+                            <div class="text-center bg-dark-gray text-warning fs-14 border-radius-4px d-inline-block ps-15px pe-15px lh-34 align-middle me-5px">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <img src="https://placehold.co/545x615" class="position-absolute top-80px left-170px opacity-7 z-index-minus-1" alt="Beslenme görseli"/>
+        <img src="{{asset('front/images/bg2.webp')}}" class="position-absolute top-80px left-170px opacity-7 z-index-minus-1" alt="Beslenme görseli"/>
     </section>
     <!-- end section -->
     <!-- start section -->
@@ -99,14 +99,11 @@
                         <div class="h-100 text-center position-relative border-radius-6px box-shadow-quadruple-large overflow-hidden">
                             <figure class="m-0">
                                 <a href="{{ route('services.show', $service->slug) }}" class="position-relative d-block">
-                                    <img src="{{ asset('storage/'.$service->image) }}" alt="{{ $service->name }}" />
-                                    <div class="label position-absolute right-20px top-20px bg-base-color fw-600 text-white text-uppercase border-radius-30px ps-15px pe-15px fs-11 ls-05px">
-                                        Beslenme
-                                    </div>
+                                    <img src="{{$service?->getFirstMediaUrl('images', 'small')}}" alt="{{ $service->name }}" />
                                 </a>
                                 <figcaption class="w-100 position-absolute bottom-0px bg-white">
                                     <div class="position-relative z-index-2 p-40px pt-25px pb-15px border-bottom border-dark-opacity">
-                                        <i class="features-icon line-icon-Healthy-Food d-block icon-extra-large"></i>
+                                        <div class="mb-17px"></div>
                                         <a href="{{ route('services.show', $service->slug) }}"
                                            class="fw-600 d-inline-block mb-5px text-dark-gray fs-18">
                                             {{ $service->name }}
@@ -152,6 +149,7 @@
         </div>
     </section>
     <!-- end section -->
+
 
 
     <!-- start section -->

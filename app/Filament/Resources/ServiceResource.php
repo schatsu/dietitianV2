@@ -6,9 +6,11 @@ use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -52,9 +54,9 @@ class ServiceResource extends Resource
                                 Forms\Components\Textarea::make('description')
                                     ->label('Açıklama')
                                     ->columnSpanFull(),
-                                Forms\Components\FileUpload::make('image')
-                                    ->helperText('Önerilen boyut: 600x710')
+                                SpatieMediaLibraryFileUpload::make('images')
                                     ->imageEditor()
+                                    ->collection('images')
                                     ->directory('services')
                                     ->label('Görsel')
                                     ->image(),
@@ -97,7 +99,7 @@ class ServiceResource extends Resource
                     ->label('Sıra')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image')
+                SpatieMediaLibraryImageColumn::make('images')
                     ->label('Görsel')
                     ->circular(),
             ])->defaultSort('order', 'asc')

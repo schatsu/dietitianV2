@@ -16,7 +16,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-xxl-6 col-xl-7 col-lg-11">
-                    <form action="#" method="post" class="contact-form-style-03">
+                    <form action="{{route('submit-message')}}" method="post" class="contact-form-style-03">
                         @csrf
                         <div class="row justify-content-center appear anime-complete"
                              data-anime="{ &quot;opacity&quot;: [0,1], &quot;duration&quot;: 600, &quot;delay&quot;:0, &quot;staggervalue&quot;: 300, &quot;easing&quot;: &quot;easeOutQuad&quot; }"
@@ -81,9 +81,8 @@
                                 </a>
                             </div>
                             <div class="col-xxl-6 col-lg-5 col-md-4 text-center text-md-end sm-mt-25px">
-                                <input id="exampleInputEmail5" type="hidden" name="redirect" value="">
                                 <button
-                                    class="btn btn-medium btn-dark-gray btn-box-shadow btn-round-edge text-transform-none primary-font submit"
+                                    class="btn btn-medium btn-dark-gray btn-box-shadow btn-round-edge text-transform-none primary-font"
                                     type="submit">Gönder
                                 </button>
                             </div>

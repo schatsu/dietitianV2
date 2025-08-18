@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceController;
@@ -16,3 +17,5 @@ Route::prefix('bloglar')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('{slug}', [BlogController::class, 'show'])->name('blogs.show');
 });
+Route::post('submit-message', ContactMessageController::class)->name('submit-message');
+

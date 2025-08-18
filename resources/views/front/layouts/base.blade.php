@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="tr">
 
 <head>
-    <title>Crafto - The Multipurpose HTML5 Template</title>
+    <title>Demo Diyetisyen</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="author" content="ThemeZaa">
@@ -104,21 +104,7 @@
                 <!-- Görsel Alan -->
                 <div class="col-lg-7 offset-xxl-1 position-relative md-mb-30px sm-mb-15"
                      data-anime='{ "translateX": [0, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                    <img src="https://placehold.co/675x560?text=Sağlıklı+Yaşam" class="position-relative z-index-9 top-40px" alt="">
-                    <img src="images/diyetisyen-surec.png" class="absolute-middle-center xs-w-95" alt="">
-                    <img src="https://placehold.co/144x64?text=Sebzeler" class="position-absolute top-50px left-0px xs-left-15px"
-                         data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)"
-                         alt="">
-                    <img src="https://placehold.co/67x34?text=Meyveler" class="position-absolute top-150px left-30"
-                         data-bottom-top="transform: translateY(30px)" data-top-bottom="transform: translateY(-30px)"
-                         alt="">
-                    <img src="https://placehold.co/61x30?text=Su" class="position-absolute top-50px right-30"
-                         data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)"
-                         alt="">
-                    <img src="https://placehold.co/93x45?text=Egzersiz"
-                         class="position-absolute top-100px right-0px xs-right-15px"
-                         data-bottom-top="transform: translateY(30px)" data-top-bottom="transform: translateY(-30px)"
-                         alt="">
+                    <img src="{{asset('front/images/asdf.jpg')}}" class="rounded position-relative z-index-9 top-40px" alt="">
                 </div>
             </div>
 
