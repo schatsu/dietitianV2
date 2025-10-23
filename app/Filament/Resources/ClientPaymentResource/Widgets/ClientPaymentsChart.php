@@ -55,7 +55,7 @@ class ClientPaymentsChart extends ChartWidget
 
         foreach (range(0, 6) as $i) {
             $date = $start->copy()->addDays($i);
-            $key = $date->format('Y-m-d'); // matches to_char format
+            $key = $date->format('Y-m-d');
             $labels[] = $date->translatedFormat('d M');
             $data[] = (float) ($rows[$key] ?? 0);
         }
@@ -71,7 +71,6 @@ class ClientPaymentsChart extends ChartWidget
             'labels' => $labels,
         ];
     }
-
 
     protected function getWeeklyData(): array
     {
@@ -106,7 +105,6 @@ class ClientPaymentsChart extends ChartWidget
             'labels' => $labels,
         ];
     }
-
 
     protected function getMonthlyData(): array
     {

@@ -8,6 +8,8 @@ use App\Exports\ClientPaymentsExport;
 use App\Filament\Resources\ClientPaymentResource\Pages;
 use App\Filament\Resources\ClientPaymentResource\RelationManagers;
 use App\Models\ClientPayment;
+use Exception;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -35,61 +37,66 @@ class ClientPaymentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('Danışan Ödeme Bilgileri')
-                ->schema([
-                    Forms\Components\Grid::make()
                     ->schema([
-                        Forms\Components\Select::make('client_id')
-                            ->label('Danışan Adı')
-                            ->relationship('client', 'first_name')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->full_name)
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Forms\Components\DatePicker::make('session_date')
-                            ->label('Seans Tarihi')
-                            ->placeholder(Carbon::today()->format('Y-m-d'))
-                            ->locale('tr')
-                            ->timezone('Europe/Istanbul')
-                            ->defaultFocusedDate(now())
-                            ->format('Y-m-d')
-                            ->native(false),
-                        Forms\Components\TextInput::make('amount')
-                            ->label('Miktar')
-                            ->prefix('₺')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\Select::make('payment_method')
-                        ->label('Ödeme Türü')
-                        ->options(ClientPaymentMethodEnum::options())
-                        ->required(),
-                        Forms\Components\Select::make('payment_status')
-                            ->label('Ödeme Türü')
-                            ->options(ClientPaymentStatusEnum::options())
-                            ->required(),
-                        Forms\Components\DatePicker::make('payment_date')
-                            ->label('Ödeme Tarihi')
-                            ->placeholder(Carbon::today()->format('Y-m-d'))
-                            ->locale('tr')
-                            ->timezone('Europe/Istanbul')
-                            ->defaultFocusedDate(now())
-                            ->format('Y-m-d')
-                            ->native(false),
-                        Forms\Components\Textarea::make('notes')
-                            ->label('Notlar')
-                            ->columnSpanFull(),
+                        Forms\Components\Grid::make()
+                            ->schema([
+                                Forms\Components\Select::make('client_id')
+                                    ->label('Danışan Adı')
+                                    ->relationship('client', 'first_name')
+                                    ->getOptionLabelFromRecordUsing(fn($record) => $record->full_name)
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                                Forms\Components\DatePicker::make('session_date')
+                                    ->label('Seans Tarihi')
+                                    ->placeholder(Carbon::today()->format('Y-m-d'))
+                                    ->locale('tr')
+                                    ->timezone('Europe/Istanbul')
+                                    ->defaultFocusedDate(now())
+                                    ->format('Y-m-d')
+                                    ->native(false),
+                                Forms\Components\TextInput::make('amount')
+                                    ->label('Miktar')
+                                    ->prefix('₺')
+                                    ->required()
+                                    ->numeric(),
+                                Forms\Components\Select::make('payment_method')
+                                    ->label('Ödeme Türü')
+                                    ->options(ClientPaymentMethodEnum::options())
+                                    ->required(),
+                                Forms\Components\Select::make('payment_status')
+                                    ->label('Ödeme Türü')
+                                    ->options(ClientPaymentStatusEnum::options())
+                                    ->required(),
+                                Forms\Components\DatePicker::make('payment_date')
+                                    ->label('Ödeme Tarihi')
+                                    ->placeholder(Carbon::today()->format('Y-m-d'))
+                                    ->locale('tr')
+                                    ->timezone('Europe/Istanbul')
+                                    ->defaultFocusedDate(now())
+                                    ->format('Y-m-d')
+                                    ->native(false),
+                                Forms\Components\Textarea::make('notes')
+                                    ->label('Notlar')
+                                    ->columnSpanFull(),
+                            ])
                     ])
-                ])
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
+            ->heading('Danışan Ödemeleri')
+            ->description('Danışanlarınızın yaptığı ödemeleri buradan görebilirsiniz.')
             ->headerActions([
                 Action::make('export_excel')
                     ->label('Excel İndir')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(fn () => Excel::download(new ClientPaymentsExport, 'odeme-kaydi.xlsx')),
+                    ->icon('heroicon-o-document')
+                    ->action(fn() => Excel::download(new ClientPaymentsExport, 'odeme-kaydi.xlsx')),
             ])
             ->columns([
                 Tables\Columns\TextColumn::make('client.full_name')
@@ -99,7 +106,12 @@ class ClientPaymentResource extends Resource
 
                 Tables\Columns\TextColumn::make('session_date')
                     ->label('Seans Tarihi')
-                    ->date('Y-m-d')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('payment_date')
+                    ->label('Ödeme Tarihi')
+                    ->date('d/m/Y')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('amount')
@@ -110,32 +122,27 @@ class ClientPaymentResource extends Resource
                 Tables\Columns\TextColumn::make('payment_method')
                     ->label('Ödeme Türü')
                     ->badge()
-                    ->color(fn ($state) => match ($state?->value) {
+                    ->color(fn($state) => match ($state?->value) {
                         ClientPaymentMethodEnum::CASH->value => 'success',
                         ClientPaymentMethodEnum::CREDIT_CARD->value => 'warning',
                         ClientPaymentMethodEnum::BANK_TRANSFER->value => 'info',
                         ClientPaymentMethodEnum::OTHER->value => 'gray',
                         default => 'secondary',
                     })
-                    ->formatStateUsing(fn ($state) => $state?->label() ?? '-')
+                    ->formatStateUsing(fn($state) => $state?->label() ?? '-')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('payment_status')
                     ->label('Ödeme Durumu')
                     ->badge()
-                    ->color(fn ($state) => match ($state?->value) {
+                    ->color(fn($state) => match ($state?->value) {
                         ClientPaymentStatusEnum::PENDING->value => 'warning',
                         ClientPaymentStatusEnum::COMPLETED->value => 'success',
                         ClientPaymentStatusEnum::CANCELLED->value => 'danger',
                         ClientPaymentStatusEnum::REFUNDED->value => 'gray',
                         default => 'secondary',
                     })
-                    ->formatStateUsing(fn ($state) => $state?->label() ?? '-')
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('payment_date')
-                    ->label('Ödeme Tarihi')
-                    ->date('Y-m-d')
+                    ->formatStateUsing(fn($state) => $state?->label() ?? '-')
                     ->sortable(),
             ])
             ->filters([
@@ -147,13 +154,6 @@ class ClientPaymentResource extends Resource
                     ->label('Ödeme Durumu')
                     ->options(\App\Enums\ClientPaymentStatusEnum::options()),
 
-                Tables\Filters\SelectFilter::make('client_id')
-                    ->label('Danışan')
-                    ->relationship('client', 'first_name')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->full_name)
-                    ->searchable()
-                    ->preload(),
-
                 Tables\Filters\Filter::make('session_date')
                     ->label('Seans Tarihi')
                     ->form([
@@ -162,15 +162,16 @@ class ClientPaymentResource extends Resource
                     ])
                     ->query(function ($query, array $data) {
                         return $query
-                            ->when($data['from'], fn ($query, $date) => $query->whereDate('session_date', '>=', $date))
-                            ->when($data['until'], fn ($query, $date) => $query->whereDate('session_date', '<=', $date));
+                            ->when($data['from'], fn($query, $date) => $query->whereDate('session_date', '>=', $date))
+                            ->when($data['until'], fn($query, $date) => $query->whereDate('session_date', '<=', $date));
                     }),
             ])
-
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\MealUnitEnum;
 use App\Filament\Resources\MealResource\Pages;
 use App\Filament\Resources\MealResource\RelationManagers;
 use App\Models\Meal;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,17 +30,29 @@ class MealResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('meal_category_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('default_quantity')
-                    ->numeric(),
-                Forms\Components\TextInput::make('unit')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Section::make('Besin Bilgileri')
+                ->schema([
+                    Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Besin Adı')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('meal_category_id')
+                            ->label('Besin Kategorisi')
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\TextInput::make('default_quantity')
+                            ->label('Besin Miktarı')
+                            ->numeric(),
+                        Select::make('unit')
+                            ->label('Birim')
+                            ->options(MealUnitEnum::options())
+                            ->required()
+
+                    ])
+                ])
             ]);
     }
 
@@ -61,10 +75,12 @@ class MealResource extends Resource
                     ->formatStateUsing(fn($state) => $state ? $state->label() : '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('O.Tarihi')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('G.Tarihi')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

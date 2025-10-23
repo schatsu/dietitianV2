@@ -26,28 +26,31 @@ class MealCategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('Besin Kategorisi Bilgileri')
-                ->schema([
-                    Forms\Components\Grid::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label('Kategori Adı')
-                            ->required()
-                            ->maxLength(255),
+                        Forms\Components\Grid::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Kategori Adı')
+                                    ->required()
+                                    ->maxLength(255),
 
-                        Forms\Components\TextInput::make('order')
-                            ->label('Sıra')
-                            ->numeric()
-                            ->required(),
+                                Forms\Components\TextInput::make('order')
+                                    ->label('Sıra')
+                                    ->minLength(1)
+                                    ->minValue(1)
+                                    ->default(fn($livewire) => ($livewire->getModel()::max('order') ?? 1) + 1)
+                                    ->numeric()
+                                    ->required(),
 
-                        Forms\Components\Toggle::make('is_popular')
-                            ->label('Popüler mi?')
-                            ->default(false),
+                                Forms\Components\Toggle::make('is_popular')
+                                    ->label('Popüler mi?')
+                                    ->default(false),
 
-                        Forms\Components\Toggle::make('status')
-                            ->label('Aktif mi?')
-                            ->default(true),
+                                Forms\Components\Toggle::make('status')
+                                    ->label('Aktif mi?')
+                                    ->default(true),
+                            ])
                     ])
-                ])
             ]);
     }
 
@@ -55,13 +58,13 @@ class MealCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order')
-                    ->label('Sıra')
-                    ->sortable(),
-
                 Tables\Columns\TextColumn::make('name')
                     ->label('Kategori Adı')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('order')
+                    ->label('Sıra')
+                    ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_popular')
                     ->label('Popüler')

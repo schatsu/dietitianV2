@@ -12,6 +12,7 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -118,6 +119,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['medical_conditions'] ?? null)
                                         ->addActionLabel('Tıbbi Durum Ekle')->collapsible(),
                                     Forms\Components\Repeater::make('medications')
                                         ->label('Kullandığı İlaçlar')
@@ -127,6 +130,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['medications'] ?? null)
                                         ->addActionLabel('İlaçla Ekle')->collapsed(),
                                     Forms\Components\Repeater::make('allergies')
                                         ->label('Alerjileri')
@@ -136,6 +141,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['allergies'] ?? null)
                                         ->addActionLabel('Alerji Ekle')->collapsed(),
                                     Forms\Components\Repeater::make('food_allergies')
                                         ->label('Besin Alerjileri')
@@ -145,6 +152,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['food_allergies'] ?? null)
                                         ->addActionLabel('Alerji Ekle')->collapsed(),
                                     Forms\Components\Textarea::make('additional_medical_notes')
                                         ->label('Ek Tıbbi Notlar')
@@ -166,7 +175,10 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
-                                        ->addActionLabel('Favori Yiyecek Ekle')->collapsible(),
+                                        ->addActionLabel('Favori Yiyecek Ekle')
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['favorite_foods'] ?? null)
+                                        ->collapsible(),
                                     Forms\Components\Repeater::make('disliked_foods')
                                         ->label('Sevmediği Yiyecekler')
                                         ->schema([
@@ -175,6 +187,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['disliked_foods'] ?? null)
                                         ->addActionLabel('Sevmediği Yiyecek Ekle')->collapsed(),
                                     Forms\Components\Repeater::make('dietary_restrictions')
                                         ->label('Diyet Kısıtlamaları')
@@ -184,6 +198,8 @@ class ClientResource extends Resource
                                                 ->nullable(),
                                         ])
                                         ->defaultItems(1)
+                                        ->live()
+                                        ->itemLabel(fn(array $state): ?string => $state['dietary_restrictions'] ?? null)
                                         ->addActionLabel('Diyet Kısıtlamaları Ekle')->collapsed(),
                                     Forms\Components\TextInput::make('meal_frequency')
                                         ->label('Öğün Sıklığı')
@@ -228,6 +244,9 @@ class ClientResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -252,33 +271,40 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('age')
                     ->label('Yaş')
                     ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('occupation')
                     ->label('Meslek')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->label('Cinsiyet')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn(GenderEnum $state) => $state->label())
                     ->badge()
                     ->color(fn(GenderEnum $state) => $state->color()),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                ->label('Durum')
+                ->options(ClientStatusEnum::options()),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->label(''),
-                Tables\Actions\EditAction::make()->label(''),
-                Tables\Actions\DeleteAction::make()->label(''),
-                Tables\Actions\Action::make('download_pdf')
-                    ->label('')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(function ($record) {
-                        $pdf = Pdf::loadView('client-report.follow-up-report', ['client' => $record]);
-                        return response()->streamDownload(
-                            fn() => print($pdf->output()),
-                            "{$record->full_name}-rapor.pdf"
-                        );
-                    }),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\Action::make('download_pdf')
+                        ->label('PDF')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->action(function ($record) {
+                            $pdf = Pdf::loadView('client-report.follow-up-report', ['client' => $record]);
+                            return response()->streamDownload(
+                                fn() => print($pdf->output()),
+                                "{$record->full_name}-rapor.pdf"
+                            );
+                        }),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+
 #[ObservedBy(MealCategoryObserver::class)]
 class MealCategory extends Model implements Sortable
 {
     use SortableTrait;
 
     protected $fillable = [
-        'name','order','is_popular', 'status'
+        'name', 'order', 'is_popular', 'status'
     ];
 
     protected function casts(): array

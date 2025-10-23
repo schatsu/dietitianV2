@@ -7,6 +7,7 @@ use App\Filament\Resources\AppointmentResource\Widgets\AppointmentOverview;
 use App\Filament\Resources\AppointmentResource\Widgets\LastAppointments;
 use App\Filament\Resources\ClientPaymentResource\Widgets\ClientPaymentsChart;
 use App\Filament\Resources\ClientResource\Widgets\TotalClient;
+use Exception;
 use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,6 +28,9 @@ use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
+    /**
+     * @throws Exception
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
