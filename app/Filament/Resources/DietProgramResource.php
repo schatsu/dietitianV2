@@ -34,7 +34,7 @@ class DietProgramResource extends Resource
     protected static ?string $navigationLabel = 'Diyet Programları';
     protected static ?string $modelLabel = 'Diyet Programı';
     protected static ?string $pluralModelLabel = 'Diyet Programı';
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::End;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
