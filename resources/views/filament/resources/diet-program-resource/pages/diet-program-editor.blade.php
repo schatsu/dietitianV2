@@ -157,7 +157,7 @@
     <x-filament::modal
         slide-over="right"
         id="addMealModal"
-        width="5xl"
+        width="4xl"
     >
         <x-slot name="header">
             Besin Ekle <br>

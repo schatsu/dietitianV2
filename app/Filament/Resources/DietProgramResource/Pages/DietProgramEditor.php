@@ -20,6 +20,7 @@ use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DietProgramEditor extends Page
@@ -57,6 +58,7 @@ class DietProgramEditor extends Page
                 ->icon('heroicon-o-share')
                 ->color('success')
                 ->button()
+                ->modalWidth('md')
                 ->modalHeading('Diyet Programını Paylaş')
                 ->modalDescription('Bu diyet programını nasıl paylaşmak istiyorsunuz?')
                 ->form(fn() => [
@@ -71,18 +73,20 @@ class DietProgramEditor extends Page
                         ->reactive()
                         ->native(false),
 
-                    TextInput::make('recipient')
+                    TextInput::make('email_recipient')
                         ->label('E-posta Adresi')
                         ->email()
                         ->required()
                         ->visible(fn(Get $get) => $get('share_method') === 'email')
+                        ->default($this->dietProgram->client->email ?? null)
                         ->placeholder('ornek@email.com'),
 
-                    TextInput::make('recipient')
+                    TextInput::make('phone_recipient')
                         ->label('Telefon Numarası')
                         ->tel()
                         ->required()
                         ->visible(fn(Get $get) => $get('share_method') === 'whatsapp')
+                        ->default($this->dietProgram->client->phone ?? null)
                         ->placeholder('905xxxxxxxxx')
                         ->helperText('Ülke kodu ile birlikte yazınız (örn: 905xxxxxxxxx)'),
 
@@ -237,7 +241,7 @@ class DietProgramEditor extends Page
     public function shareProgram(array $data): void
     {
         $method = $data['share_method'] ?? null;
-        $recipient = $data['recipient'] ?? '';
+        $recipient = $data['phone_recipient'] ?? $data[ 'email_recipient'] ?? '';
         $message = $data['message'] ?? '';
 
         match ($method) {
@@ -251,11 +255,7 @@ class DietProgramEditor extends Page
     private function shareViaEmail(string $email): void
     {
         try {
-            SendDietProgramEmailJob::dispatch(
-                $this->dietProgram,
-                $email,
-                $this->table
-            )->delay(now()->addMinutes(2));
+            SendDietProgramEmailJob::dispatch($this->dietProgram, $email, $this->table);
 
 
             $this->notify(
@@ -288,11 +288,8 @@ class DietProgramEditor extends Page
             $text = urlencode($finalMessage);
             $whatsappUrl = "https://wa.me/{$phone}?text={$text}";
 
-            if (auth()->user()) {
-                auth()->user()->notify(
-                    new DietProgramSharedNotification($this->dietProgram, 'whatsapp', $phone)
-                );
-            }
+
+                auth()?->user()?->notify(new DietProgramSharedNotification($this->dietProgram, 'whatsapp', $phone));
 
             $this->dispatch('openUrl', ['url' => $whatsappUrl]);
 
@@ -309,43 +306,22 @@ class DietProgramEditor extends Page
         }
     }
 
-    private function downloadAsPdf(): StreamedResponse
+    private function downloadAsPdf(): void
     {
-        try {
-            // Kullanıcıya bildirim gönder
-            if (auth()->user()) {
-                auth()->user()->notify(
-                    new DietProgramSharedNotification(
-                        $this->dietProgram,
-                        'pdf',
-                        auth()->user()->email ?? 'Sistem'
-                    )
-                );
-            }
+        $pdf = Pdf::loadView('filament.resources.diet-program-resource.pages.diet-program-pdf', [
+            'dietProgram' => $this->dietProgram,
+            'tableData' => $this->table,
+        ]);
 
-            $pdf = Pdf::loadView('filament.resources.diet-program-resource.pages.diet-program-pdf', [
-                'dietProgram' => $this->dietProgram,
-                'days' => $this->days,
-                'times' => $this->times,
-                'table' => $this->table,
-            ]);
+        $client = Str::slug($this->dietProgram->client?->full_name);
 
-            $this->notify(
-                '📄 PDF indiriliyor!',
-                'Diyet programı PDF olarak hazırlandı.'
-            );
+        $fileName = $client.'_diyet_programi'.'.pdf';
+        $filePath = storage_path('app/public/' . $fileName);
 
-            return response()->streamDownload(
-                fn() => print($pdf->output()),
-                'diyet_programi_' . $this->dietProgram->id . '.pdf',
-                ['Content-Type' => 'application/pdf']
-            );
-        } catch (\Exception $e) {
-            $this->notify(
-                'Hata!',
-                'PDF oluşturulamadı: ' . $e->getMessage(),
-                'danger'
-            );
-        }
+        $pdf->save($filePath);
+
+        $this->dispatch('openUrl', ['url' => asset('storage/' . $fileName)]);
     }
+
+
 }
