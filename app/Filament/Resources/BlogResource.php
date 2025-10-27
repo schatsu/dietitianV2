@@ -5,10 +5,13 @@ namespace App\Filament\Resources;
 use App\Enums\BlogStatusEnum;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Models\Blog;
+use Exception;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -92,9 +95,19 @@ class BlogResource extends Resource
 
                 Forms\Components\Section::make('Görseller & SEO')
                     ->schema([
-                        Forms\Components\FileUpload::make('cover_image')
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover_image')
                             ->label('Kapak Görseli')
                             ->image()
+                            ->hint('600x430px')
+                            ->collection('blogs')
+                            ->mimeTypeMap(['image/jpeg' => 'jpg', 'image/png' => 'png'])
+                            ->imageEditor()
+                            ->directory('blogs'),
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('og_image')
+                            ->label('OG Görseli')
+                            ->image()
+                            ->hint('1200x630px')
+                            ->collection('blogs')
                             ->mimeTypeMap(['image/jpeg' => 'jpg', 'image/png' => 'png'])
                             ->imageEditor()
                             ->directory('blogs'),
@@ -107,7 +120,8 @@ class BlogResource extends Resource
                                 Forms\Components\TextInput::make('seo_description')
                                     ->label('SEO Açıklaması'),
 
-                                Forms\Components\TextInput::make('seo_keywords')
+                                Forms\Components\SpatieTagsInput::make('seo_keywords')
+                                    ->type('blog')
                                     ->label('SEO Anahtar Kelimeleri'),
                             ]),
                     ])
@@ -115,26 +129,34 @@ class BlogResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')
+                    ->label('Kapak Resmi')
+                    ->circular(),
+
                 Tables\Columns\TextColumn::make('title')
                     ->label('Başlık')
+                    ->words(5)
+                    ->tooltip(fn($record) => $record->title)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Kısa Açıklama')
-                    ->limit(50)
+                    ->label('Açıklama')
+                    ->words(5)
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->tooltip(fn($record) => $record->description)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
-
-                Tables\Columns\ImageColumn::make('cover_image')
-                    ->label('Kapak')
-                    ->circular(),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Durum')
@@ -156,29 +178,39 @@ class BlogResource extends Resource
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Oluşturulma')
+                    ->label('Oluşturulma T.')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Güncellenme')
+                    ->label('Güncellenme T.')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                ->label('Durum')
+                ->options(BlogStatusEnum::options()),
+                SelectFilter::make('is_featured')
+                ->label('Öne Çıkarıldı mı?')
+                ->options([
+                    true => 'Evet',
+                    false => 'Hayır'
+                ])
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('Düzenle'),
-                Tables\Actions\DeleteAction::make()->label('Sil'),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->label('Seçilenleri Sil'),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('order')
+            ->reorderable('order');
     }
 
     public static function getRelations(): array

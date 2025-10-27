@@ -39,4 +39,11 @@ enum BlogStatusEnum: string
             self::DRAFT => 'gray',
         };
     }
+
+    public static function options(): array
+    {
+        return collect(self::cases())->mapWithKeys(fn($case) => [
+            $case->value => $case->label(),
+        ])->toArray();
+    }
 }

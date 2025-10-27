@@ -19,14 +19,12 @@ return new class extends Migration
             $table->string('description')->nullable()->index();
             $table->string('slug')->nullable()->index();
             $table->longText('content')->nullable();
-            $table->string('cover_image')->nullable()->index();
             $table->string('status')->default(BlogStatusEnum::ACTIVE)->nullable()->index();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->integer('order')->nullable()->index();
             $table->boolean('is_featured')->default(false)->index();
             $table->text('seo_title')->nullable()->index();
             $table->text('seo_description')->nullable()->index();
-            $table->text('seo_keywords')->nullable()->index();
             $table->timestamps();
         });
     }

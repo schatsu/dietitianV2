@@ -57,6 +57,10 @@ class LastAppointments extends BaseWidget
                     ->formatStateUsing(fn(AppointmentStatusEnum $state) => $state->label())
                     ->badge()
                     ->color(fn(AppointmentStatusEnum $state) => $state->color()),
-            ])->paginated(false);
+            ])
+            ->paginated(false)
+            ->emptyStateHeading('Henüz randevu bulunmuyor')
+            ->emptyStateDescription('Yeni randevular oluşturuldukça burada görünecektir.')
+            ->emptyStateIcon('heroicon-o-calendar');
     }
 }
