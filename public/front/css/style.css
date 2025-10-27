@@ -2576,7 +2576,7 @@ input:focus, select:focus, textarea:focus, .form-control:focus {
   display: none;
 }
 .magic-drag-cursor #ball-cursor:before {
-  content: "< DRAG >";
+  content: "< KAYDIR >";
   font-size: 14px;
   color: var(--white) !important;
   font-weight: 600;

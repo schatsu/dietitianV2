@@ -17,13 +17,12 @@ class Slider extends Component
      */
     public function __construct()
     {
-        $this->sliders = Cache::remember('active_sliders', 3600, function () {
-            return \App\Models\Slider::query()
-                ->select(['id', 'title', 'slug', 'description', 'image', 'link', 'order', 'is_active'])
-                ->where('is_active', true)
-                ->orderBy('order')
-                ->get();
-        }) ?? collect();
+        $this->sliders = \App\Models\Slider::query()
+            ->select(['id', 'title', 'slug', 'description', 'link', 'order', 'is_active'])
+            ->where('is_active', true)
+            ->with('media')
+            ->orderBy('order')
+            ->get();
     }
 
     /**

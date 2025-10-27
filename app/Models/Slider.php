@@ -8,19 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 use Mtvs\EloquentHashids\HasHashid;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\SlugOptions;
 
 #[ObservedBy(SliderObserver::class)]
-class Slider extends Model implements Sortable
+class Slider extends Model implements Sortable, HasMedia
 {
-    use SortableTrait, HasHashid;
+    use SortableTrait, HasHashid, InteractsWithMedia;
 
     public $sortable = [
         'order_column_name' => 'order',
         'sort_when_creating' => true,
     ];
     protected $fillable = [
-        'title', 'slug', 'description', 'image', 'link', 'order', 'is_active'
+        'title', 'slug', 'description', 'link', 'order', 'is_active'
     ];
 
     /**
@@ -39,6 +43,15 @@ class Slider extends Model implements Sortable
             'order' => 'integer',
             'is_active' => 'boolean'
         ];
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('slider')
+            ->fit(Fit::Crop, 1920, 1080)
+            ->format('webp')
+            ->withResponsiveImages()
+            ->nonQueued();
     }
 
     public function getImageUrlAttribute(): string

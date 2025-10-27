@@ -42,10 +42,12 @@ class Blog extends Model implements HasMedia
     {
         $this->addMediaConversion('cover_image')
             ->fit(Fit::Crop, 600, 430)
+            ->format('webp')
             ->nonQueued();
 
         $this->addMediaConversion('og_image')
             ->fit(Fit::Crop, 1200, 630)
+            ->format('webp')
             ->nonQueued();
     }
 

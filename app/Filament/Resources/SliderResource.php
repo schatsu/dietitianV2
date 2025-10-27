@@ -47,9 +47,10 @@ class SliderResource extends Resource
                                 Forms\Components\Textarea::make('description')
                                     ->label('Açıklama')
                                     ->columnSpanFull(),
-                                Forms\Components\FileUpload::make('image')
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('slider')
                                     ->label('Resim')
                                     ->image()
+                                    ->collection('slider')
                                     ->directory('sliders')
                                     ->imageEditor()
                                     ->maxSize(4096)
@@ -76,15 +77,16 @@ class SliderResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('slider')
+                    ->circular()
+                    ->collection('slider')
+                    ->label('Resim'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Başlık')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->circular()
-                    ->label('Resim'),
                 Tables\Columns\TextColumn::make('link')
                     ->label('Link')
                     ->copyable()
@@ -97,12 +99,12 @@ class SliderResource extends Resource
                     ->label('Durum')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('O.Tarihi')
+                    ->label('Oluşturulma T.')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('G.Tarihi')
+                    ->label('Güncellenme T.')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -119,7 +121,10 @@ class SliderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->emptyStateHeading('Henüz slider bulunmuyor')
+            ->emptyStateDescription('Yeni sliderlar oluşturuldukça burada görünecektir.')
+            ->emptyStateIcon('heroicon-o-photo');
     }
 
     public static function getRelations(): array
