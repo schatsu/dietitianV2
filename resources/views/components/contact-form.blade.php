@@ -1,98 +1,54 @@
-<div>
-    <section class="bg-gradient-quartz-white position-relative z-index-0 sm-pt-0">
-        <div class="container-fluid overflow-hidden position-relative pt-6 sm-pt-40px">
-            <img src="{{asset('frontend/images/demo-corporate-contact-bg-01.png')}}"
-                 class="position-absolute top-0 left-minus-300px z-index-minus-1"
-                 data-bottom-top="transform: rotate(0deg) translateY(0)"
-                 data-top-bottom="transform:rotate(-15deg) translateY(0)" alt="" data-no-retina="" style="">
-            <div class="row justify-content-center mb-2 sm-mb-3">
-                <div class="col-lg-6 text-center appear anime-child anime-complete"
-                     data-anime="{ &quot;el&quot;: &quot;childs&quot;, &quot;translateY&quot;: [30, 0], &quot;opacity&quot;: [0,1], &quot;duration&quot;: 600, &quot;delay&quot;:0, &quot;staggervalue&quot;: 300, &quot;easing&quot;: &quot;easeOutQuad&quot; }">
-                    <span
-                        class="ps-25px pe-25px mb-15px text-uppercase text-base-color fs-14 lh-42px fw-700 border-radius-100px bg-gradient-quartz-light-transparent d-inline-block"
-                        style="">İletişim</span>
-                    <h3 class="text-dark-gray fw-700 ls-minus-1px" style="">Size nasıl yardımcı olabilirim?</h3>
-                </div>
+<!-- start section -->
+<section class="pt-0">
+    <div class="container-fluid p-0">
+        <div class="row g-0"
+             data-anime='{ "el": "childs", "translateX": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 300, "staggervalue": 150, "easing": "easeOutQuad" }'>
+            <div class="col-lg-8">
+                <div id="map" class="map h-100 md-h-450px"
+                     data-map-options='{ "lat": 5, "lng": 4, "style": "standart", "marker": { "type": "HTML", "color": "#005153" }, "popup": { "defaultOpen": true, "html": "<div class=infowindow><strong class=\"mb-3 d-inline-block alt-font\">Dr.Emel Gökmen</strong><p class=\"alt-font\">adres</p></div><div class=\"google-maps-link alt-font\"> <a aria-label=\"{{__('messages.view_larger_map')}}\" target=\"_blank\" jstcache=\"31\" href=\"https://maps.app.goo.gl/yacc3SwtUE1yX7VR9\" jsaction=\"mouseup:placeCard.largerMap\">{{__('messages.view_larger_map')}}</a></div>" } }'></div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-xxl-6 col-xl-7 col-lg-11">
-                    <form action="{{route('submit-message')}}" method="post" class="contact-form-style-03">
+            <div class="col-xxl-4 col-lg-6 position-relative">
+                <div
+                    class="contact-form-style-03 position-relative bg-spring-wood z-index-1 p-14 lg-p-10 sm-p-30px overflow-hidden last-paragraph-no-margin">
+                    <h3 class="text-dark-gray mb-30px sm-mb-20px fancy-text-style-4 ls-minus-2px">
+                        <span data-fancy-text='{ "effect": "rotate", "string": ["Merhaba!", "Hello!"] }'></span>
+                    </h3>
+                    <form action="{{route('submit-message')}}" method="post">
                         @csrf
-                        <div class="row justify-content-center appear anime-complete"
-                             data-anime="{ &quot;opacity&quot;: [0,1], &quot;duration&quot;: 600, &quot;delay&quot;:0, &quot;staggervalue&quot;: 300, &quot;easing&quot;: &quot;easeOutQuad&quot; }"
-                             style="">
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1"
-                                       class="form-label fw-600 text-dark-gray mb-0">Ad*</label>
-                                <div class="position-relative form-group mb-25px">
-                                    <span class="form-icon"><i class="bi bi-emoji-smile"></i></span>
-                                    <input
-                                        class="ps-0 border-radius-0px border-color-extra-medium-gray bg-transparent form-control required"
-                                        id="exampleInputEmail1" type="text" name="name" placeholder="Adınızı giriniz?">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1"
-                                       class="form-label fw-600 text-dark-gray mb-0">E-posta*</label>
-                                <div class="position-relative form-group mb-25px">
-                                    <span class="form-icon"><i class="bi bi-envelope"></i></span>
-                                    <input
-                                        class="ps-0 border-radius-0px border-color-extra-medium-gray bg-transparent form-control required"
-                                        id="exampleInputEmail2" type="email" name="email"
-                                        placeholder="E-posta adresini giriniz">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1"
-                                       class="form-label fw-600 text-dark-gray mb-0">Telefon</label>
-                                <div class="position-relative form-group mb-25px">
-                                    <span class="form-icon"><i class="bi bi-telephone"></i></span>
-                                    <input
-                                        class="ps-0 border-radius-0px border-color-extra-medium-gray bg-transparent form-control"
-                                        id="exampleInputEmail3" type="tel" name="phone"
-                                        placeholder="Telefon numaranızı giriniz">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1"
-                                       class="form-label fw-600 text-dark-gray mb-0">Konu</label>
-                                <div class="position-relative form-group mb-25px">
-                                    <span class="form-icon"><i class="bi bi-journals"></i></span>
-                                    <input
-                                        class="ps-0 border-radius-0px border-color-extra-medium-gray bg-transparent form-control"
-                                        id="exampleInputEmail4" type="text" name="subject"
-                                        placeholder="Hangi konuda yardımcı olabilirim?">
-                                </div>
-                            </div>
-                            <div class="col-12 mb-4">
-                                <label for="exampleInputEmail1"
-                                       class="form-label fw-600 text-dark-gray mb-0">Mesaj</label>
-                                <div class="position-relative form-group form-textarea mb-0">
-                                    <textarea
-                                        class="ps-0 border-radius-0px border-color-extra-medium-gray bg-transparent form-control"
-                                        name="message" placeholder="Lütfen mesajınızı giriniz" rows="4"></textarea>
-                                    <span class="form-icon"><i class="bi bi-chat-square-dots"></i></span>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6 col-lg-7 col-md-8">
-                                <a href="#" class="mb-0 fs-14 lh-24 text-center text-md-start">
-                                    Gizliliğinizi korumaya kararlıyız. Açık izniniz olmadan hakkınızda asla bilgi
-                                    toplamayacağız.
-                                </a>
-                            </div>
-                            <div class="col-xxl-6 col-lg-5 col-md-4 text-center text-md-end sm-mt-25px">
-                                <button
-                                    class="btn btn-medium btn-dark-gray btn-box-shadow btn-round-edge text-transform-none primary-font"
-                                    type="submit">Gönder
-                                </button>
-                            </div>
-                            <div class="col-12">
+                        <div class="position-relative form-group mb-20px">
+                            <input
+                                class="ps-0 border-radius-0px medium-gray bg-transparent border-color-light-red form-control required"
+                                type="text" name="name" placeholder="Adınız*"/>
+                        </div>
+                        <div class="position-relative form-group mb-20px">
+                            <input
+                                class="ps-0 border-radius-0px medium-gray bg-transparent border-color-light-red form-control required"
+                                type="email" name="email" placeholder="E-Posta Adresiniz*"/>
+                        </div>
 
-                            </div>
+                        <div class="position-relative form-group mb-20px">
+                            <input
+                                class="ps-0 border-radius-0px medium-gray bg-transparent border-color-light-red form-control required"
+                                type="tel" name="phone" placeholder="Telefon Numaranız*"/>
+                        </div>
+
+                        <div class="position-relative z-index-1 form-group form-textarea mt-15px mb-0">
+                                <textarea
+                                    class="ps-0 border-radius-0px medium-gray bg-transparent border-color-light-red form-control required"
+                                    name="message" placeholder="Mesajınız" rows="3"></textarea>
+                            <button
+                                class="btn btn-medium btn-base-color btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100"
+                                type="submit">Mesaj Gönder<i class="fa-regular fa-envelope"></i>
+                            </button>
+                            {{--                                <p class="fs-13 lh-22 w-90 md-w-100">I understand that my data will be hold securely in--}}
+                            {{--                                    accordance with the <a--}}
+                            {{--                                        class="text-decoration-line-bottom text-dark-gray text-dark-gray-hover fw-500"--}}
+                            {{--                                        href="#">privacy policy.</a></p>--}}
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>
+<!-- end section -->

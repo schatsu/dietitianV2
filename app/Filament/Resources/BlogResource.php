@@ -57,6 +57,10 @@ class BlogResource extends Resource
                         Forms\Components\RichEditor::make('content')
                             ->label('İçerik')
                             ->columnSpanFull(),
+
+                        Forms\Components\SpatieTagsInput::make('tags')
+                            ->type('blog_tags')
+                            ->label('Anahtar Kelimeler'),
                     ])
                     ->columns(1)->collapsible(),
 
@@ -121,7 +125,7 @@ class BlogResource extends Resource
                                     ->label('SEO Açıklaması'),
 
                                 Forms\Components\SpatieTagsInput::make('seo_keywords')
-                                    ->type('blog')
+                                    ->type('blog_seo_keywords')
                                     ->label('SEO Anahtar Kelimeleri'),
                             ]),
                     ])

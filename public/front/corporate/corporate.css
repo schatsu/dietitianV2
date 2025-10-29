@@ -28,7 +28,7 @@ sup {
 }
 a {
     color: #878898;
-} 
+}
 b, strong {
     font-weight: 700;
 }
@@ -76,9 +76,7 @@ header .navbar-brand img {
     background-color: var(--dark-gray);
 }
 /* heading */
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 25px;
-}
+
 /* page title */
 .down-section {
     bottom: 30px;
@@ -86,14 +84,6 @@ header .navbar-brand img {
 .page-title-extra-large h1 {
     font-size: 4.5rem;
     line-height: 4.5rem;
-}
-h1, .h1 {
-    font-size: 4.688rem;
-    line-height: 4.688rem;
-}
-h2 {
-    font-size: 3.125rem;
-    line-height: 3.125rem;
 }
 .small-screen {
     height: 350px !important;
@@ -109,7 +99,7 @@ h2 {
     background: -webkit-linear-gradient(right, rgba(240, 244, 253, 1.0), rgba(255, 255, 255, 0.0));
     background: linear-gradient(to right, rgba(240, 244, 253, 1.0), rgba(255, 255, 255, 0.0));
 }
-.bg-gradient-blue-whale-transparent { 
+.bg-gradient-blue-whale-transparent {
     background: -webkit-linear-gradient(right, rgba(17, 27, 50, 1.0), rgba(255, 255, 255, 0.0));
     background: linear-gradient(to right, rgba(17, 27, 50, 1.0), rgba(255, 255, 255, 0.0));
 }
@@ -117,7 +107,7 @@ h2 {
     background: -webkit-linear-gradient(right, rgba(227, 225, 245, 1.0), rgba(255, 255, 255, 0.0));
     background: linear-gradient(to right, rgba(227, 225, 245, 1.0), rgba(255, 255, 255, 0.0));
 }
-.bg-gradient-quartz-white { 
+.bg-gradient-quartz-white {
     background-image: linear-gradient(to bottom, #f7f7ff, #f4f4fb, #f8f7fc, #fbfbfe, #ffffff);
 }
 .bg-gradient-base-color-transparent {
@@ -205,7 +195,7 @@ h2 {
 .interactive-banner-style-02.dark-hover:hover .btn {
     opacity: 0.7;
 }
-/* blog comment */ 
+/* blog comment */
 .blog-comment li .btn-reply {
     padding: 6px 20px 7px;
 }

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------
- 
+
  Theme Name: Crafto - The Multipurpose HTML5 Template
  Theme URL: https://craftohtml.themezaa.com/
  Description: Elevate your online presence with Crafto - a modern, versatile, multipurpose Bootstrap 5 responsive HTML5, SCSS template using highly creative 52+ ready demos.
@@ -7,14 +7,14 @@
  Author ThemeForest URL: https://themeforest.net/user/themezaa
  Copyright(c) 2024 themezaa.com
  Version: 2.0
- 
+
  ------------------------------------------------------- */
 
 (function ($) {
 
     "use strict";
     /* ===================================
-     Change variables value as per your need 
+     Change variables value as per your need
      ====================================== */
 
     var menuBreakPoint = 991;
@@ -517,7 +517,7 @@
             }, 500);
         }
     }
-    
+
     // Without link
     $('.nav-item  .nav-link').on('click',function(e) {
     var submenuLenth = $(this).closest('.dropdown').find('.dropdown').length;
@@ -586,7 +586,7 @@
 
                 // Filter default on load
                 if (typeof $.fn.isotope === 'function') {
-                    var currentPortfolioActive = $('.portfolio-filter > li.active > a').attr('data-filter');
+                    var currentPortfolioActive = $('.category-filter > li.active > a').attr('data-filter');
                     if (currentPortfolioActive != '' && currentPortfolioActive != undefined) {
                         _this.isotope({filter: currentPortfolioActive});
                     }
@@ -603,13 +603,13 @@
         });
     }
 
-    $(document).on('click', '.portfolio-filter > li > a', function () {
+    $(document).on('click', '.category-filter > li > a', function () {
         var _this = $(this),
-                parentSectionObj = _this.parents('section');
-        parentSectionObj.find('.portfolio-filter > li').removeClass('active');
+            parentSectionObj = _this.parents('section');
+        parentSectionObj.find('.category-filter > li').removeClass('active');
         _this.parent().addClass('active');
         var selector = _this.attr('data-filter'),
-                portfolioFilter = parentSectionObj.find('.portfolio-wrapper');
+            portfolioFilter = parentSectionObj.find('.portfolio-wrapper');
 
         portfolioFilter.find('.grid-item[data-anime]').addClass('appear');
         if (typeof portfolioFilter.isotope === 'function') {
@@ -633,7 +633,7 @@
         ;
     }
 
-    // Horizontal portfolio 
+    // Horizontal portfolio
     const ThreeDLetterMenuEffect = () => {
         $(".threeD-letter-menu .menu-item").each(function () {
             let _self = this,
@@ -708,7 +708,7 @@
     }
     ThreeDLetterMenuEffect();
 
-    // Minimal portfolio 
+    // Minimal portfolio
     const sticky_container = document.querySelector(".sticky-image-distortion-wrapper");
     if (typeof (sticky_container) != 'undefined' && sticky_container != null) {
         let winsize;
@@ -780,7 +780,7 @@
      Blog
      ====================================== */
 
-    // Blog isotope filter 
+    // Blog isotope filter
     if (typeof imagesLoaded === 'function') {
         $('.blog-wrapper').each(function () {
             var _this = $(this);
@@ -826,10 +826,10 @@
     });
 
     /* ===================================
-     Image gallery 
+     Image gallery
      ====================================== */
 
-    // Image gallery isotope filter 
+    // Image gallery isotope filter
     if (typeof imagesLoaded === 'function') {
         $('.gallery-wrapper').each(function () {
             var _this = $(this);
@@ -1691,7 +1691,7 @@
         });
     }
 
-    // Fancy text 
+    // Fancy text
     function FancyTextDefault(item, ftOptions) {
         let text_effect = ftOptions.effect,
                 duration = ftOptions.duration ? ftOptions.duration : 3000,
@@ -1875,7 +1875,7 @@
                             output = output.replace('data-src', 'src');
                             output = output.replace('{{link}}', link);
                             output = output.replace('{{image}}', image);
-                            
+
                             output = output.replace('{{likes}}', likes);
                             output = output.replace('{{comments}}', comments);
                             output = output.replace( '{{image-class}}', 'image' );
@@ -2208,7 +2208,7 @@
             setParallax();
         }
 
-        // Non retina image code 
+        // Non retina image code
         $("img:not([data-at2x])").each(function () {
             $(this).attr('data-no-retina', '');
         });
@@ -2403,7 +2403,7 @@
         } else {
             $('.scroll-top-arrow').fadeOut('300');
         }
-        
+
         if ( $( 'nav.header-reverse-back-scroll' ).length > 0 ) {
             var st = scrollPos;
             if ( st > lastScroll ) {

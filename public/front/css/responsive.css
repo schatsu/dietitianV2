@@ -21415,10 +21415,10 @@
   }
 }
 @media (max-width: 991px) {
-  .portfolio-filter.filter-btn li {
+  .category-filter.filter-btn li {
     padding: 0 6px;
   }
-  .portfolio-filter.filter-btn li a {
+  .category-filter.filter-btn li a {
     padding: 6px 25px;
   }
   .mousetip-wrapper .caption {
@@ -21432,11 +21432,11 @@
   }
 }
 @media (max-width: 767px) {
-  .portfolio-filter.filter-btn li {
+  .category-filter.filter-btn li {
     padding: 0;
     margin-bottom: 10px;
   }
-  .portfolio-filter.filter-btn li a {
+  .category-filter.filter-btn li a {
     display: block;
   }
   .nav-tabs li {

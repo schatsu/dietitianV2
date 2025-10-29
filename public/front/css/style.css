@@ -40,7 +40,7 @@ Table of contents
     02. CSS color variable
 ====================================== */
 :root {
-  --base-color: #2946f3;
+  --base-color: #1E273A;
   --white: #ffffff;
   --black: #000000;
   --red: #dc3131;
@@ -95,7 +95,7 @@ body {
   font-size: 16px;
   line-height: 30px;
   font-weight: 400;
-  color: var(--medium-gray);
+  color: var(--dark-gray);
   -moz-osx-font-smoothing: grayscale;
   word-break: break-word;
   -webkit-font-smoothing: antialiased;
@@ -17662,37 +17662,37 @@ canvas {
   width: 100%;
 }
 /* Portfolio filter */
-.portfolio-filter li {
+.category-filter li {
   padding: 0 25px;
 }
-.portfolio-filter li:first-child {
+.category-filter li:first-child {
   padding-left: 0;
 }
-.portfolio-filter li:last-child {
+.category-filter li:last-child {
   padding-right: 0;
 }
-.portfolio-filter li a {
+.category-filter li a {
   color: var(--medium-gray);
   border-bottom: 2px solid transparent;
 }
-.portfolio-filter li:hover a, .portfolio-filter li:focus a, .portfolio-filter li.active a {
+.category-filter li:hover a, .category-filter li:focus a, .category-filter li.active a {
   color: var(--dark-gray);
   border-color: var(--dark-gray);
 }
-.portfolio-filter.filter-btn li {
+.category-filter.filter-btn li {
   padding: 0 12px;
 }
-.portfolio-filter.filter-btn li a {
+.category-filter.filter-btn li a {
   padding: 6px 30px;
   border-radius: 40px;
 }
-.portfolio-filter.filter-btn li a:hover, .portfolio-filter.filter-btn li a:focus, .portfolio-filter.filter-btn li a.active {
+.category-filter.filter-btn li a:hover, .category-filter.filter-btn li a:focus, .category-filter.filter-btn li a.active {
   background-color: var(--white);
   color: var(--dark-gray);
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
 }
-.portfolio-filter.filter-btn li.active a {
+.category-filter.filter-btn li.active a {
   background-color: var(--white);
   color: var(--dark-gray);
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);

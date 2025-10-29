@@ -7,82 +7,45 @@
     </style>
 @endpush
 @section('content')
-    <!-- start section -->
-    <section id="down-section" class="border-bottom border-color-extra-medium-gray mt-2">
-        <div class="container overlap-gap-section">
+    <section class="ipad-top-space-margin md-pt-0">
+        <div class="container">
             <div class="row justify-content-center mb-3">
-                <div class="col-lg-12 text-center appear anime-child anime-complete" data-anime="{ &quot;el&quot;: &quot;childs&quot;, &quot;translateY&quot;: [30, 0], &quot;opacity&quot;: [0,1], &quot;duration&quot;: 600, &quot;delay&quot;: 0, &quot;staggervalue&quot;: 300, &quot;easing&quot;: &quot;easeOutQuad&quot; }">
-                    <h2 class="text-dark-gray ls-minus-1px">Hakkımda</h2>
+                <div class="col-lg-12 text-center appear anime-child anime-complete"
+                     data-anime="{ &quot;el&quot;: &quot;childs&quot;, &quot;translateY&quot;: [30, 0], &quot;opacity&quot;: [0,1], &quot;duration&quot;: 600, &quot;delay&quot;: 0, &quot;staggervalue&quot;: 300, &quot;easing&quot;: &quot;easeOutQuad&quot; }">
+                    <h2 class="text-dark-gray  ls-minus-1px">Hakkımda</h2>
                     <div class="mt-auto justify-content-start breadcrumb breadcrumb-style-01 fs-14 text-dark-gray">
                         <ul>
-                            <li><a href="{{route('home')}}" class="text-dark-gray text-dark-gray-hover">Ana sayfa</a></li>
-                            <li><a href="{{route('about')}}" class="text-dark-gray fw-bold text-dark-gray-hover">Hakkımda</a></li>
+                            <li><a href="{{route('home')}}"
+                                   class="text-dark-gray text-dark-gray-hover">Anasayfa</a></li>
+                            <li><a href="{{route('about')}}"
+                                   class="text-dark-gray fw-bold text-dark-gray-hover">Hakkımda</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-center mb-5 md-mb-40px text-center text-md-start">
-                <div class="about-content col-md-10 md-mb-20px text-center text-lg-start last-paragraph-no-margin">
-                    <p class="w-90 xl-w-100" data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>{!! str($about->content)->sanitizeHtml() !!}<span class="fw-600 text-dark-gray text-decoration-line-bottom"></span></p>
+            <div class="row justify-content-center">
+                <div class="col-12 about-content">
+                    {!! str($about?->content ?? '')->sanitizeHtml() !!}
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 justify-content-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
                 <!-- start features box item -->
-                <div class="col custom-icon-with-text-style-02">
-                    <div class="feature-box p-6 last-paragraph-no-margin overflow-hidden md-mb-20px">
-                        <div class="feature-box-icon">
-                            <i class="fa-solid fa-graduation-cap fa-2xl mb-20px" style="color: #C4C1E9"></i>
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Uzmanlık</span>
-                            <p>Obezite Yönetimi</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end features box item -->
-                <!-- start features box item -->
-                <div class="col custom-icon-with-text-style-02">
-                    <div class="feature-box p-6 last-paragraph-no-margin overflow-hidden md-mb-20px">
-                        <div class="feature-box-icon">
-                            <i class="fa-solid fa-language fa-2xl mb-20px" style="color: #C4C1E9"></i>
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Diller</span>
-                            <p>Türkçe, İnglizce</p>
+                @foreach($about?->highlights as $stat)
+                    <div class="col custom-icon-with-text-style-02">
+                        <div class="feature-box p-6 last-paragraph-no-margin overflow-hidden md-mb-20px">
+                            <x-dynamic-component :component="$stat['icon'] ?? null" style="width: 50px; height: 50px; color: #C4C1E9"/>
+                            <div class="feature-box-content">
+                                <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">{{$stat['title'] ?? ''}}</span>
+                                <p>{{$stat['subtitle'] ?? ''}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- end features box item -->
-                <!-- start features box item -->
-                <div class="col custom-icon-with-text-style-02">
-                    <div class="feature-box p-6 last-paragraph-no-margin overflow-hidden xs-mb-20px">
-                        <div class="feature-box-icon">
-                            <i class="fa-solid fa-award fa-2xl mb-20px" style="color: #C4C1E9"></i>
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Deneyim</span>
-                            <p>5+ Yıl</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end features box item -->
-                <!-- start features box item -->
-                <div class="col custom-icon-with-text-style-02">
-                    <div class="feature-box p-6 last-paragraph-no-margin overflow-hidden">
-                        <div class="feature-box-icon">
-                            <i class="fa-solid fa-users fa-2xl mb-20px" style="color: #C4C1E9"></i>
-                        </div>
-                        <div class="feature-box-content">
-                            <span class="d-block fs-19 fw-700 text-dark-gray mb-5px">Danışan</span>
-                            <p>1000 +</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
                 <!-- end features box item -->
             </div>
+
         </div>
     </section>
-    <!-- end section -->
     <section class="py-0 mb-20px sm-pt-50px appear anime-complete" data-anime="{ &quot;translateY&quot;: [0, 0], &quot;opacity&quot;: [0,1], &quot;duration&quot;: 1200, &quot;delay&quot;: 0, &quot;staggervalue&quot;: 150, &quot;easing&quot;: &quot;easeOutQuad&quot; }" style="">
         <div class="container overlap-section" style="margin-top: -37px;">
             <div class="row justify-content-center g-0">
@@ -103,3 +66,15 @@
     <x-review/>
     <x-featured-blog/>
 @endsection
+@push('script')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("a[href*='storage']").forEach(el => {
+                let img = el.querySelector("img");
+                if (img) {
+                    el.replaceWith(img);
+                }
+            });
+        });
+    </script>
+@endpush

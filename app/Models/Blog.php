@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Enums\BlogStatusEnum;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -54,5 +56,19 @@ class Blog extends Model implements HasMedia
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    protected function descriptionFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Str::limit($this->description, 45),
+        );
+    }
+
+    protected function titleFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Str::limit($this->title, 50),
+        );
     }
 }

@@ -18,7 +18,8 @@ class About extends Component
     {
         $this->about = Cache::remember('about', 3600, function () {
             return \App\Models\About::query()
-                ->select(['id', 'title', 'slug', 'content'])
+                ->select(['id', 'title', 'slug', 'content','highlights'])
+                ->with('media')
                 ->first();
         });
     }

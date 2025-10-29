@@ -10,7 +10,7 @@ class PageController extends Controller
     public function about()
     {
         $about = About::query()
-            ->select(['id','title','slug', 'content'])
+            ->select(['id','title','slug', 'content','highlights'])
             ->first();
 
         return view('front.about', compact('about'));

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title')->index();
             $table->string('slug')->index()->unique();
             $table->text('description')->nullable();
-            $table->string('image');
             $table->string('link')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active');
