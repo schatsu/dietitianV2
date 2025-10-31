@@ -28,7 +28,20 @@ class ContactMessageResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Mesaj Bilgileri')
+                ->schema([
+                    Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Ad Soyad'),
+                        Forms\Components\TextInput::make('email')
+                            ->label('E-Posta'),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Telefon'),
+                        Forms\Components\Textarea::make('message')
+                            ->label('Mesaj'),
+                    ])
+                ])
             ]);
     }
 
@@ -44,8 +57,6 @@ class ContactMessageResource extends Resource
                 ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                 ->label('Telefon'),
-                Tables\Columns\TextColumn::make('subject')
-                ->label('Konu'),
                 Tables\Columns\TextColumn::make('message')
                 ->label('Mesaj'),
             ])
@@ -54,6 +65,7 @@ class ContactMessageResource extends Resource
             ])
             ->actions([
 //                Tables\Actions\EditAction::make(),
+            Tables\Actions\ViewAction::make(),
             Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

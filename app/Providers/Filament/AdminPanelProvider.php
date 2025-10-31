@@ -3,9 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Settings\SiteSettings;
 use App\Filament\Resources\AppointmentResource\Widgets\AppointmentOverview;
-use App\Filament\Resources\AppointmentResource\Widgets\LastAppointments;
-use App\Filament\Resources\ClientPaymentResource\Widgets\ClientPaymentsChart;
 use App\Filament\Resources\ClientResource\Widgets\TotalClient;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
@@ -13,16 +12,15 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
@@ -33,6 +31,10 @@ class AdminPanelProvider extends PanelProvider
      */
     public function panel(Panel $panel): Panel
     {
+        if (Schema::hasTable('settings'))
+        {
+            $generalSettings = app(SiteSettings::class);
+        }
         return $panel
             ->default()
             ->id('admin')
@@ -40,8 +42,11 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->unsavedChangesAlerts()
             ->profile(isSimple: false)
-            ->brandName('Demo Diyetisyen')
-            ->login()
+            ->unsavedChangesAlerts()
+            ->brandName($generalSettings->site_name ?? 'Dyt.Ayşe Yılmaz')
+            ->brandLogo(fn() => view('filament.components.brand-logo', [
+                'generalSettings' => $generalSettings ?? null,
+            ]))
             ->colors([
                 'primary' => Color::Amber,
             ])

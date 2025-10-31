@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GetAppointmentSlotsRequest;
 use App\Http\Requests\StoreAppointmentRequest;
+use App\Jobs\SendNewAppointmentRequestToAdminJob;
 use App\Models\Appointment;
 use App\Models\AppointmentSlot;
 use Illuminate\Http\Request;
@@ -21,11 +22,13 @@ class AppointmentController extends Controller
 
         $slot = AppointmentSlot::query()->findOrFail($attributes->get('appointment_slot_id'));
 
-        Appointment::query()->create($attributes->toArray());
+        $appointment = Appointment::query()->create($attributes->toArray());
 
         $slot->update(['is_booked' => true]);
 
-        toast('Randevu başarıyla oluşturuldu.', 'success');
+        SendNewAppointmentRequestToAdminJob::dispatch($appointment);
+
+        toast('Randevu talebi başarıyla oluşturuldu.', 'success');
 
         return redirect()->back();
     }

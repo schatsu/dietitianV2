@@ -6,14 +6,15 @@
         <div class="container-fluid">
             <div class="col-auto me-auto pe-lg-0">
                 <a class="navbar-brand" href="{{route('home')}}">
-                    <img src="{{asset('front/images/demo-corporate-logo-black.png')}}"
-                         data-at2x="{{asset('front/images/demo-corporate-logo-black@2x.png')}}" alt=""
-                         class="default-logo">
-                    <img src="{{asset('front/images/demo-corporate-logo-black.png')}}"
-                         data-at2x="{{asset('front/images/demo-corporate-logo-black@2x.png')}}" alt="" class="alt-logo">
-                    <img src="{{asset('front/images/demo-corporate-logo-black.png')}}"
-                         data-at2x="{{asset('front/images/demo-corporate-logo-black@2x.png')}}" alt=""
-                         class="mobile-logo">
+                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         alt="{{$generalSetting?->site_name}}" class="default-logo">
+                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         alt="{{$generalSetting?->site_name}}" class="alt-logo">
+                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
+                         alt="{{$generalSetting?->site_name}}" class="mobile-logo">
                 </a>
             </div>
             <div class="col-auto menu-order position-static">

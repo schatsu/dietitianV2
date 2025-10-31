@@ -112,7 +112,7 @@
                                 {{--                                </p>--}}
                             </div>
                             <div class="col-xl-5 col-md-5 text-center text-md-end sm-mt-20px">
-                                <button class="btn btn-base-color btn-medium btn-rounded btn-box-shadow submit"
+                                <button class="btn btn-base-color btn-medium btn-rounded btn-box-shadow"
                                         type="submit">Mesajı Gönder</button>
                             </div>
                         </form>
