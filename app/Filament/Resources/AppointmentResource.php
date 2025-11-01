@@ -103,10 +103,12 @@ class AppointmentResource extends Resource
 
                 TextColumn::make('slot.start_time')
                     ->label('Başlangıç Saati')
+                    ->dateTime('H:i')
                     ->sortable(),
 
                 TextColumn::make('slot.end_time')
                     ->label('Bitiş Saati')
+                    ->dateTime('H:i')
                     ->sortable(),
 
                 TextColumn::make('name')
@@ -146,7 +148,7 @@ class AppointmentResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->defaultSort('created_at', 'desc');
     }
 
 

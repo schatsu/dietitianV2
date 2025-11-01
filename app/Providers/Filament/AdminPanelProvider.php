@@ -41,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->passwordReset()
             ->unsavedChangesAlerts()
+            ->login()
             ->profile(isSimple: false)
             ->unsavedChangesAlerts()
             ->brandName($generalSettings->site_name ?? 'Dyt.Ayşe Yılmaz')
