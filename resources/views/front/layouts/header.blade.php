@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg mini-header header-light bg-white header-reverse header-demo glass-effect"
          data-header-hover="light">
         <div class="container-fluid">
-            <div class="col-auto me-auto pe-lg-0">
+            <div class="col-auto me-auto ps-lg-0">
                 <a class="navbar-brand" href="{{route('home')}}">
                     <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
                          data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
@@ -17,7 +17,7 @@
                          alt="{{$generalSetting?->site_name}}" class="mobile-logo">
                 </a>
             </div>
-            <div class="col-auto menu-order position-static">
+            <div class="col-auto col-lg-8 menu-order position-static">
                 <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
                     <span class="navbar-toggler-line"></span>
@@ -27,6 +27,16 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{{route('appointments.index')}}"
+                               class="btn btn-very-small btn-switch-text btn-light left-icon btn-round-edge btn-box-shadow">
+                              <span>
+                                 <span><i class="feather icon-feather-calendar"></i></span>
+                                 <span class="btn-double-text"
+                                       data-text="Acele et!">Randevu Al</span>
+                              </span>
+                            </a>
+                        </li>
                         <li class="nav-item"><a href="{{route('home')}}" class="nav-link">Ana Sayfa</a></li>
                         <li class="nav-item"><a href="{{route('about')}}" class="nav-link">Hakkımda</a></li>
                         <li class="nav-item dropdown dropdown-with-icon-style02">
@@ -47,7 +57,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-auto d-none d-lg-flex">
+            <div class="col-auto col-lg-2 text-end xs-pe-0">
                 <div class="header-icon">
                     <div class="header-search-icon icon">
                         <a href="javascript:void(0)" class="search-form-icon header-search-form"><i
@@ -68,7 +78,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="header-button">
+                    <div class="header-button ms-20px d-none d-xl-inline-block">
                         <a href="{{route('appointments.index')}}"
                            class="btn btn-very-small btn-switch-text btn-base-color left-icon btn-round-edge btn-box-shadow">
                               <span>
@@ -78,7 +88,6 @@
                               </span>
                         </a>
                     </div>
-
                 </div>
             </div>
         </div>
