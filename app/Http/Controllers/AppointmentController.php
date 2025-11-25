@@ -30,7 +30,7 @@ class AppointmentController extends Controller
 
         alert(
             'Başarılı',
-            "Randevu talebi başarıyla oluşturuldu.\nRandevunuz bilgileriniz mail olarak iletilecektir.",
+            "Randevu talebi başarıyla oluşturuldu.\nRandevu bilgileriniz mail olarak iletilecektir.",
             'success'
         );
 
