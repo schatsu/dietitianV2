@@ -30,16 +30,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
 
-        /* Pagination (bullet) stilleri */
+        .splide {
+            position: relative;
+        }
+
         .splide__pagination {
             position: absolute;
-            bottom: 12px; /* görselin içinde yer alır */
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             display: flex;
             gap: 8px;
             color: var(--base-color) !important;
+            max-width: 100%;
+            justify-content: center;
         }
 
         .splide__pagination__page {
@@ -55,7 +60,6 @@
             transform: scale(1.3);
         }
 
-        /* Mobilde biraz daha yukarı çekelim */
         @media (max-width: 768px) {
             .splide__pagination {
                 bottom: 6px;
@@ -64,6 +68,19 @@
                 width: 6px;
                 height: 6px;
             }
+        }
+        img.logo-light-mode {
+            width: 270px;
+            height: 88px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        img.logo-light-mode:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.3s ease;
         }
     </style>
     @stack('css')

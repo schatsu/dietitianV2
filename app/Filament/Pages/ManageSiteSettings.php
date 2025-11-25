@@ -4,7 +4,6 @@ namespace App\Filament\Pages;
 
 use App\Settings\SiteSettings;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Pages\SettingsPage;
 
@@ -41,26 +40,22 @@ class ManageSiteSettings extends SettingsPage
                                                     ->nullable()
                                                     ->maxLength(255),
                                                 Forms\Components\FileUpload::make('site_logo_light')
-                                                    ->label('Site Logo (Açık Mod)')
+                                                    ->label('Açık Tema Logo')
+                                                    ->hint('192x44 önerilir')
+                                                    ->hintIcon('heroicon-o-sun')
                                                     ->image()
                                                     ->directory('logo')
                                                     ->maxSize(2048)
                                                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
                                                     ->nullable(),
                                                 Forms\Components\FileUpload::make('site_logo_dark')
-                                                    ->label('Site Logo (Koyu Tema)')
+                                                    ->label('Koyu Tema Logo')
+                                                    ->hint('192x44 önerilir')
+                                                    ->hintIcon('heroicon-o-moon')
                                                     ->image()
                                                     ->directory('logo')
                                                     ->maxSize(2048)
-                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
-                                                    ->required(),
-                                                Forms\Components\FileUpload::make('site_favicon')
-                                                    ->label('Site Favicon')
-                                                    ->image()
-                                                    ->directory('logo')
-                                                    ->maxSize(2048)
-                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
-                                                    ->nullable(),
+                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif']),
                                             ])
                                     ]),
                                 Forms\Components\Tabs\Tab::make('İletişim Bilgileri')

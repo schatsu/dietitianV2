@@ -19,7 +19,7 @@ class SiteSettings extends Settings
     public ?float $longitude = null;
 
     public ?string $site_logo_light = null;
-    public ?string $site_logo_dark = null;
+    public ?string $site_logo_dark= null;
     public ?string $site_favicon = null;
 
     public ?string $google_analytics = null;

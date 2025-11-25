@@ -6,15 +6,7 @@
         <div class="container-fluid">
             <div class="col-auto me-auto ps-lg-0">
                 <a class="navbar-brand" href="{{route('home')}}">
-                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         alt="{{$generalSetting?->site_name}}" class="default-logo">
-                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         alt="{{$generalSetting?->site_name}}" class="alt-logo">
-                    <img src="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         data-at2x="{{ asset('storage/' . $generalSetting?->site_logo_dark) ?? '' }}"
-                         alt="{{$generalSetting?->site_name}}" class="mobile-logo">
+                    <img src="{{ $generalSetting?->site_logo_light }}" alt="{{$generalSetting?->site_name}}" class="logo">
                 </a>
             </div>
             <div class="col-auto col-lg-8 menu-order position-static">
