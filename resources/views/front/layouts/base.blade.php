@@ -122,13 +122,44 @@ https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js
             autoplay: true,
             interval: 4000,
             pauseOnHover: true,
+            pauseOnFocus: true,
             arrows: true,
             pagination: true,
-            speed: 800,
+            speed: 900,
+            easing: 'ease-in-out',
+
+            flickPower: 400,
+            flickMaxPages: 1,
+            drag   : true,
+
+            lazyLoad: 'nearby',
+
+            breakpoints: {
+                1280: {
+                    perPage: 1,
+                    gap: '24px',
+                },
+                1024: {
+                    perPage: 1,
+                    gap: '20px',
+                },
+                768: {
+                    perPage: 1,
+                    arrows: false,
+                    gap: '16px',
+                },
+                480: {
+                    perPage: 1,
+                    arrows: false,
+                    pagination: true,
+                    gap: '12px',
+                },
+            },
         });
         splideSlide.mount();
     });
 </script>
+
 @stack('script')
 </body>
 

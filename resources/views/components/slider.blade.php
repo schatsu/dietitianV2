@@ -3,7 +3,7 @@
         <ul class="splide__list">
             @foreach($sliders as $slider)
             <li class="splide__slide">
-                <img src="{{$slider?->getFirstMediaUrl('slider', 'slider')}}" alt="">
+                <img class="rounded" src="{{$slider?->getFirstMediaUrl('slider', 'slider')}}" alt="{{$slider?->title}}">
             </li>
             @endforeach
         </ul>
