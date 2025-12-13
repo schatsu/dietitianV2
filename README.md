@@ -95,7 +95,7 @@ A comprehensive web application for dietitians to manage their practice, clients
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/schatsu/dietitianV2.git
 cd dietitianV2
 ```
 
