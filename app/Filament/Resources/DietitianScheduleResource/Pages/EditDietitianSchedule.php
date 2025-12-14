@@ -6,6 +6,7 @@ use App\Filament\Resources\DietitianScheduleResource;
 use Carbon\Carbon;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class EditDietitianSchedule extends EditRecord
 {
@@ -22,7 +23,6 @@ class EditDietitianSchedule extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        // Schedule'ın periods'larını form için hazırla
         $schedule = $this->record;
         $periods = $schedule->periods;
 
@@ -33,16 +33,13 @@ class EditDietitianSchedule extends EditRecord
             ];
         })->toArray();
 
-        // frequency_config'den days'i çıkar - null ise varsayılan günleri kullan
         $frequencyConfig = $schedule->frequency_config;
         if (is_array($frequencyConfig) && isset($frequencyConfig['days'])) {
             $data['frequency_config'] = ['days' => $frequencyConfig['days']];
         } else {
-            // Varsayılan günler (hafta içi)
             $data['frequency_config'] = ['days' => ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']];
         }
 
-        // Metadata'dan seans ayarlarını al
         $metadata = $schedule->metadata;
         if (is_array($metadata)) {
             $data['metadata'] = [
@@ -64,9 +61,8 @@ class EditDietitianSchedule extends EditRecord
         return $data;
     }
 
-    protected function handleRecordUpdate(\Illuminate\Database\Eloquent\Model $record, array $data): \Illuminate\Database\Eloquent\Model
+    protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        // Metadata hazırla
         $metadata = [];
         if ($data['schedule_type'] === 'availability' && isset($data['metadata'])) {
             $metadata = [
@@ -75,15 +71,13 @@ class EditDietitianSchedule extends EditRecord
             ];
         }
 
-        // Frequency değerini string'e çevir (Enum olabilir)
         $frequencyValue = $data['frequency'] ?? null;
         if ($frequencyValue instanceof \BackedEnum) {
             $frequencyValue = $frequencyValue->value;
         } elseif (is_object($frequencyValue) && property_exists($frequencyValue, 'value')) {
             $frequencyValue = $frequencyValue->value;
         }
-        
-        // Frequency config hazırla - is_recurring true ve frequency weekly ise days'i kaydet
+
         $frequencyConfig = null;
         if ($data['is_recurring'] ?? false) {
             $days = $data['frequency_config']['days'] ?? [];
@@ -92,7 +86,6 @@ class EditDietitianSchedule extends EditRecord
             }
         }
 
-        // Temel schedule bilgilerini güncelle
         $record->update([
             'name' => $data['name'],
             'schedule_type' => $data['schedule_type'],
@@ -105,7 +98,6 @@ class EditDietitianSchedule extends EditRecord
             'metadata' => !empty($metadata) ? $metadata : null,
         ]);
 
-        // Mevcut periods'ları sil ve yenilerini ekle
         $record->periods()->delete();
 
         if (!empty($data['periods_data'])) {

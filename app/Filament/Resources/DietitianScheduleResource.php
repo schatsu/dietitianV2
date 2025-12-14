@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DietitianScheduleResource\Pages;
 use App\Models\User;
 use App\Services\BookAppointmentService;
+use Exception;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
@@ -20,6 +21,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
+use Zap\Enums\Frequency;
+use Zap\Enums\ScheduleTypes;
 use Zap\Models\Schedule;
 
 class DietitianScheduleResource extends Resource
@@ -177,18 +180,20 @@ class DietitianScheduleResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->heading('Müsaitlik Takvimleri')
             ->description('Diyetisyen çalışma saatleri ve izin günleri')
             ->modifyQueryUsing(function ($query) {
-                // Sadece diyetisyenin schedule'larını göster
                 $dietitian = User::role('super_admin')->first();
                 if ($dietitian) {
                     $query->where('schedulable_type', User::class)
                           ->where('schedulable_id', $dietitian->id)
-                          ->whereIn('schedule_type', [\Zap\Enums\ScheduleTypes::AVAILABILITY, \Zap\Enums\ScheduleTypes::BLOCKED]);
+                          ->whereIn('schedule_type', [ScheduleTypes::AVAILABILITY, ScheduleTypes::BLOCKED]);
                 }
             })
             ->columns([
@@ -201,7 +206,7 @@ class DietitianScheduleResource extends Resource
                     ->label('Tür')
                     ->badge()
                     ->formatStateUsing(function ($state): string {
-                        $value = $state instanceof \Zap\Enums\ScheduleTypes ? $state->value : (string) $state;
+                        $value = $state instanceof ScheduleTypes ? $state->value : (string) $state;
                         return match ($value) {
                             'availability' => 'Müsaitlik',
                             'blocked' => 'Bloklanmış',
@@ -210,7 +215,7 @@ class DietitianScheduleResource extends Resource
                         };
                     })
                     ->color(function ($state): string {
-                        $value = $state instanceof \Zap\Enums\ScheduleTypes ? $state->value : (string) $state;
+                        $value = $state instanceof ScheduleTypes ? $state->value : (string) $state;
                         return match ($value) {
                             'availability' => 'success',
                             'blocked' => 'danger',
@@ -235,7 +240,7 @@ class DietitianScheduleResource extends Resource
                         if ($state === null) {
                             return 'Tek Seferlik';
                         }
-                        $value = $state instanceof \Zap\Enums\Frequency ? $state->value : (string) $state;
+                        $value = $state instanceof Frequency ? $state->value : (string) $state;
                         return match ($value) {
                             'daily' => 'Günlük',
                             'weekly' => 'Haftalık',
@@ -292,9 +297,9 @@ class DietitianScheduleResource extends Resource
             return null;
         }
 
-        return (string) Schedule::where('schedulable_type', User::class)
+        return (string) Schedule::query()->where('schedulable_type', User::class)
             ->where('schedulable_id', $dietitian->id)
-            ->whereIn('schedule_type', [\Zap\Enums\ScheduleTypes::AVAILABILITY, \Zap\Enums\ScheduleTypes::BLOCKED])
+            ->whereIn('schedule_type', [ScheduleTypes::AVAILABILITY, ScheduleTypes::BLOCKED])
             ->count();
     }
 }
