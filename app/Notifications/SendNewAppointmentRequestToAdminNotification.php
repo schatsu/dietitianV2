@@ -2,18 +2,18 @@
 
 namespace App\Notifications;
 
-use App\Models\Appointment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
+use Zap\Models\Schedule;
 
 class SendNewAppointmentRequestToAdminNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Appointment $appointment) {}
+    public function __construct(public Schedule $appointment) {}
 
     public function via(object $notifiable): array
     {
@@ -22,24 +22,31 @@ class SendNewAppointmentRequestToAdminNotification extends Notification implemen
 
     public function toMail(object $notifiable): MailMessage
     {
-        $slot = $this->appointment->slot;
+        $metadata = $this->appointment->metadata ?? [];
+        $period = $this->appointment->periods->first();
 
-        $formattedDate = $slot
-            ? Carbon::parse($slot->date)->translatedFormat('d F Y')
+        $formattedDate = $period
+            ? Carbon::parse($period->date)->translatedFormat('d F Y')
             : $this->appointment->created_at->translatedFormat('d F Y');
 
-        $formattedTime = $slot?->start_time ? Carbon::parse($slot->start_time)->format('H:i') : null;
+        $formattedTime = $period?->start_time
+            ? Carbon::parse($period->start_time)->format('H:i')
+            : null;
+
+        $clientName = $metadata['client_name'] ?? 'Bilinmiyor';
+        $clientEmail = $metadata['client_email'] ?? 'Bilinmiyor';
+        $clientNote = $metadata['note'] ?? '-';
 
         return (new MailMessage)
             ->subject('🎉 Yeni Randevu Talebi Geldi')
             ->greeting('Merhaba 👋 Admin,')
             ->line('Yeni bir randevu talebi oluşturuldu:')
-            ->line('**Ad Soyad:** ' . $this->appointment->name)
-            ->line('**E-posta:** ' . $this->appointment->email)
+            ->line('**Ad Soyad:** ' . $clientName)
+            ->line('**E-posta:** ' . $clientEmail)
             ->when($formattedTime, fn($msg) => $msg->line("**Randevu Tarihi:** {$formattedDate} - {$formattedTime}"))
             ->unless($formattedTime, fn($msg) => $msg->line("**Randevu Tarihi:** {$formattedDate}"))
             ->line('**Mesaj:**')
-            ->line('"' . ($this->appointment->message ?? '-') . '"')
+            ->line('"' . $clientNote . '"')
             ->action('Admin Paneli Aç', config('app.url') . '/admin')
             ->line('📅 Lütfen randevuyu admin panelinizden kontrol edin.');
     }
@@ -49,3 +56,4 @@ class SendNewAppointmentRequestToAdminNotification extends Notification implemen
         return [];
     }
 }
+

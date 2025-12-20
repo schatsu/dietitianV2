@@ -34,7 +34,7 @@ class AppointmentController extends Controller
             ]
         );
 
-        //SendNewAppointmentRequestToAdminJob::dispatch($appointment);
+        SendNewAppointmentRequestToAdminJob::dispatch($appointment);
 
         alert(
             'Başarılı',

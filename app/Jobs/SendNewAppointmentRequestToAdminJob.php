@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\Appointment;
 use App\Models\User;
 use App\Notifications\SendNewAppointmentRequestToAdminNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,6 +10,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
+use Zap\Models\Schedule;
 
 class SendNewAppointmentRequestToAdminJob implements ShouldQueue
 {
@@ -19,7 +19,7 @@ class SendNewAppointmentRequestToAdminJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Appointment $appointment)
+    public function __construct(public Schedule $appointment)
     {
 
     }
