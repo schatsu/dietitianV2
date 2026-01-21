@@ -308,19 +308,23 @@ class DietProgramEditor extends Page
 
     private function downloadAsPdf(): void
     {
+        $this->dietProgram->refresh();
+        $this->loadTable();
+
         $pdf = Pdf::loadView('filament.resources.diet-program-resource.pages.diet-program-pdf', [
             'dietProgram' => $this->dietProgram,
             'tableData' => $this->table,
         ]);
 
         $client = Str::slug($this->dietProgram->client?->full_name);
+        $timestamp = now()->format('Ymd_His');
 
-        $fileName = $client.'_diyet_programi'.'.pdf';
+        $fileName = $client.'_diyet_programi_'.$timestamp.'.pdf';
         $filePath = storage_path('app/public/' . $fileName);
 
         $pdf->save($filePath);
 
-        $this->dispatch('openUrl', ['url' => asset('storage/' . $fileName)]);
+        $this->dispatch('openUrl', ['url' => asset('storage/' . $fileName) . '?t=' . time()]);
     }
 
 
